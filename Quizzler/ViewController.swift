@@ -47,13 +47,22 @@ class ViewController: UIViewController {
     
 
     func nextQuestion() {
-        if counter < allQuestions.list.count{
+        if counter < allQuestions.list.count - 1{
             counter += 1
             let question = allQuestions.list[counter]
             questionLabel.text = question.questionText
         }
-        else{
-            startOver()
+        else{//CREATE AN ALERT
+            let alert = UIAlertController(title: "Congrats", message: "You've already finished all the questions, do you want to start over the GAME?", preferredStyle: .alert)
+            
+            let restartAction = UIAlertAction(title: "Restart", style: .default) { (UIAlertAction) in
+                self.startOver()
+            }
+            alert.addAction(restartAction)
+            
+            //PRESENT ALERT TO THE VIEWER
+            present(alert, animated: true,completion: nil)
+            
         }
         
     }
