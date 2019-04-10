@@ -7,13 +7,17 @@
 //
 
 import UIKit
+import AVFoundation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,AVAudioPlayerDelegate {
     
     let allQuestions = QuestionBank()
     var pickedAnswer:Bool = false
     var counter = 0
     var score = 0
+    let soundName = ["winner","no"]
+    var player : AVAudioPlayer!
+    var index : Int!
     
     
     
@@ -77,13 +81,16 @@ class ViewController: UIViewController {
         let answer = allQuestions.list[counter]
         if answer.correctAnswer == pickedAnswer{
             print("you got it!")
+            index = 0
             ProgressHUD.showSuccess("Correct!")
             score += 1
         }
         else {
             print("Wrong!")
+            index = 1
             ProgressHUD.showError("Wrong!")
         }
+        playSound(soundName: soundName[index])
         nextQuestion()
     }
     
@@ -95,5 +102,17 @@ class ViewController: UIViewController {
         nextQuestion()
     }
     
-
+    func playSound(soundName: String){
+        let url = Bundle.main.url(forResource: soundName, withExtension: "mp3")!
+        do
+        {
+            player = try AVAudioPlayer(contentsOf: url)
+            
+        }
+        catch
+        {
+            print(error)
+        }
+        player.play()
+    }
 }

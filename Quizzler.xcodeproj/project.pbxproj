@@ -17,6 +17,8 @@
 		F92DC171225D290C00CCBCAE /* QuestionBank.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92DC170225D290C00CCBCAE /* QuestionBank.swift */; };
 		F9CF9E00225D75DF003EBFE0 /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F9CF9DFE225D75DF003EBFE0 /* ProgressHUD.bundle */; };
 		F9CF9E01225D75DF003EBFE0 /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CF9DFF225D75DF003EBFE0 /* ProgressHUD.m */; };
+		F9CF9E08225E16D4003EBFE0 /* winner.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F9CF9E06225E16D4003EBFE0 /* winner.mp3 */; };
+		F9CF9E09225E16D4003EBFE0 /* no.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F9CF9E07225E16D4003EBFE0 /* no.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		F9CF9DFD225D75DF003EBFE0 /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
 		F9CF9DFE225D75DF003EBFE0 /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
 		F9CF9DFF225D75DF003EBFE0 /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
+		F9CF9E06225E16D4003EBFE0 /* winner.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = winner.mp3; sourceTree = "<group>"; };
+		F9CF9E07225E16D4003EBFE0 /* no.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = no.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +71,7 @@
 		633646BB1B8C657400FF45E2 /* Quizzler */ = {
 			isa = PBXGroup;
 			children = (
+				F9CF9E05225E168F003EBFE0 /* Sounds */,
 				EBB1C72D1B946C580011F5C3 /* Controller */,
 				EBB1C72C1B946C530011F5C3 /* Model */,
 				EBB1C72B1B946C4B0011F5C3 /* View */,
@@ -113,6 +118,15 @@
 				633646C01B8C657400FF45E2 /* ViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		F9CF9E05225E168F003EBFE0 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				F9CF9E07225E16D4003EBFE0 /* no.mp3 */,
+				F9CF9E06225E16D4003EBFE0 /* winner.mp3 */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,7 +189,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9CF9E09225E16D4003EBFE0 /* no.mp3 in Resources */,
 				ADEB04ED1FBDFEAA00026359 /* Main.storyboard in Resources */,
+				F9CF9E08225E16D4003EBFE0 /* winner.mp3 in Resources */,
 				633646C91B8C657400FF45E2 /* LaunchScreen.xib in Resources */,
 				AD6F1CCC20EBCFF600198C34 /* README.md in Resources */,
 				F9CF9E00225D75DF003EBFE0 /* ProgressHUD.bundle in Resources */,
