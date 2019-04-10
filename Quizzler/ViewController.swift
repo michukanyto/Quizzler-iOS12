@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     let allQuestions = QuestionBank()
     var pickedAnswer:Bool = false
     var counter = 0
+    var score = 0
     
     
     
@@ -23,8 +24,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let firtsQuestion = allQuestions.list[counter]
-        questionLabel.text = firtsQuestion.questionText
+        nextQuestion()
         
     }
 
@@ -36,19 +36,24 @@ class ViewController: UIViewController {
         else{
             pickedAnswer = false
         }
+        counter += 1
+        progressLabel.text = String("\(counter + 1)/13")
         checkAnswer()
   
     }
     
     
     func updateUI() {
+        score = 0
+        counter = 0
+        progressLabel.text = "1/13"
+        scoreLabel.text = "Score: 0"
       
     }
     
 
     func nextQuestion() {
         if counter < allQuestions.list.count - 1{
-            counter += 1
             let question = allQuestions.list[counter]
             questionLabel.text = question.questionText
         }
@@ -58,6 +63,7 @@ class ViewController: UIViewController {
             let restartAction = UIAlertAction(title: "Restart", style: .default) { (UIAlertAction) in
                 self.startOver()
             }
+            
             alert.addAction(restartAction)
             
             //PRESENT ALERT TO THE VIEWER
@@ -72,18 +78,20 @@ class ViewController: UIViewController {
         let answer = allQuestions.list[counter]
         if answer.correctAnswer == pickedAnswer{
             print("you got it!")
+            score += 1
         }
         else {
             print("Wrong!")
         }
+        scoreLabel.text = "Score : \(String(score))"
         nextQuestion()
     }
     
     
     func startOver() {
         print ("New Game!")
-        counter = 0
-        viewDidLoad()
+        updateUI()
+        nextQuestion()
     }
     
 
