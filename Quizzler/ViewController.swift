@@ -15,9 +15,9 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
     var pickedAnswer:Bool = false
     var counter = 0
     var score = 0
-    let soundName = ["winner","no"]
+    let soundName = ["winner","no","start"]
     var player : AVAudioPlayer!
-    var index : Int!
+    var index : Int = 2
     
     
     
@@ -28,6 +28,7 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        playSound(soundName: soundName[index])
         nextQuestion()
         
     }
@@ -99,6 +100,8 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
         print ("New Game!")
         score = 0
         counter = 0
+        index = 2
+        playSound(soundName: soundName[index])
         nextQuestion()
     }
     
