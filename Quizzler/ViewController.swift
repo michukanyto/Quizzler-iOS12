@@ -37,17 +37,15 @@ class ViewController: UIViewController {
             pickedAnswer = false
         }
         counter += 1
-        progressLabel.text = String("\(counter + 1)/13")
         checkAnswer()
   
     }
     
     
     func updateUI() {
-        score = 0
-        counter = 0
-        progressLabel.text = "1/13"
-        scoreLabel.text = "Score: 0"
+        progressLabel.text = String("\(counter + 1)/13")
+        scoreLabel.text = "Score : \(String(score))"
+        progressBar.frame.size.width = (view.frame.size.width / 13) * CGFloat (counter + 1) //CALCULATE THE PROGRESS BAR
       
     }
     
@@ -56,6 +54,7 @@ class ViewController: UIViewController {
         if counter < allQuestions.list.count - 1{
             let question = allQuestions.list[counter]
             questionLabel.text = question.questionText
+            updateUI()
         }
         else{//CREATE AN ALERT
             let alert = UIAlertController(title: "Congrats", message: "You've already finished all the questions, do you want to start over the GAME?", preferredStyle: .alert)
@@ -83,14 +82,14 @@ class ViewController: UIViewController {
         else {
             print("Wrong!")
         }
-        scoreLabel.text = "Score : \(String(score))"
         nextQuestion()
     }
     
     
     func startOver() {
         print ("New Game!")
-        updateUI()
+        score = 0
+        counter = 0
         nextQuestion()
     }
     
