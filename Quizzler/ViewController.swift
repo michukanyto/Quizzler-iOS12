@@ -18,7 +18,9 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
     let soundName = ["winner","no","start"]
     var player : AVAudioPlayer!
     var index : Int = 2
-    
+    let ALERTMESSAGE = "You\'ve already finished all the questions, do you want to start over the GAME?"
+    let ALERTTITLE = "Congrats"
+    let ALERTACTIONMESSAGE = "Restart"
     
     
     @IBOutlet weak var questionLabel: UILabel!
@@ -62,9 +64,9 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
             updateUI()
         }
         else{//CREATE AN ALERT
-            let alert = UIAlertController(title: "Congrats", message: "You've already finished all the questions, do you want to start over the GAME?", preferredStyle: .alert)
+            let alert = UIAlertController(title: ALERTTITLE, message: ALERTMESSAGE, preferredStyle: .alert)
             
-            let restartAction = UIAlertAction(title: "Restart", style: .default) { (UIAlertAction) in
+            let restartAction = UIAlertAction(title: ALERTACTIONMESSAGE, style: .default) { (UIAlertAction) in
                 self.startOver()
             }
             
