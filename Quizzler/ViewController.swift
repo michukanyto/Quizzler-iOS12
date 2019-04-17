@@ -8,9 +8,11 @@
 
 import UIKit
 import AVFoundation
+import Firebase
 
 class ViewController: UIViewController,AVAudioPlayerDelegate {
-    
+    var ref:DatabaseReference!//1 to read
+    var dataBaseHandle:DatabaseHandle!//3 to read
     let allQuestions = QuestionBank()
     var pickedAnswer:Bool = false
     var counter = 0
@@ -21,6 +23,7 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
     let ALERTMESSAGE = "You\'ve already finished all the questions, do you want to start over the GAME?"
     let ALERTTITLE = "Congrats"
     let ALERTACTIONMESSAGE = "Restart"
+    var posData = [Question]()
     
     
     @IBOutlet weak var questionLabel: UILabel!
@@ -31,6 +34,30 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         playSound(soundName: soundName[index])
+        
+        //////////////////////////////////////
+        
+//                SET FIREBASE REFERENCE
+        ref = Database.database().reference()//2 to read
+        dataBaseHandle = ref?.child("QuestionBank").observe(.value, with: { (snapshot) in
+            guard let data = snapshot.value as? [String:[String:Any]]  else{
+                return
+            }
+            
+
+            for(_,val) in data{
+                
+                 let newObj = Question(questionText:val["Question"] as! String, correctAnswer:val["correctAnswer"] as! Bool)
+                 self.posData.append(newObj)
+                print(val["Question"] as! String,"\n")
+                print(val["correctAnswer"] as! Bool,"\n")
+            }
+
+
+        })
+     
+      
+      ////////////////////////////////////
         nextQuestion()
         
     }
@@ -55,41 +82,42 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
         progressBar.frame.size.width = (view.frame.size.width / 13) * CGFloat (counter + 1) //CALCULATE THE PROGRESS BAR
       
     }
-    
+
 
     func nextQuestion() {
-        if counter < allQuestions.list.count - 1{
-            let question = allQuestions.list[counter]
-            questionLabel.text = question.questionText
+        if counter < posData.count - 1{
+            
+            //////////////////////////////////////////////////////////
+            let question = posData[counter].questionText
+            questionLabel.text = question
             updateUI()
         }
         else{//CREATE AN ALERT
             let alert = UIAlertController(title: ALERTTITLE, message: ALERTMESSAGE, preferredStyle: .alert)
-            
+
             let restartAction = UIAlertAction(title: ALERTACTIONMESSAGE, style: .default) { (UIAlertAction) in
                 self.startOver()
             }
-            
+
             alert.addAction(restartAction)
-            
+
             //PRESENT ALERT TO THE VIEWER
             present(alert, animated: true,completion: nil)
-            
+
         }
-        
+
     }
+
     
     
     func checkAnswer() {
-        let answer = allQuestions.list[counter]
+        let answer = posData[counter]
         if answer.correctAnswer == pickedAnswer{
-            print("you got it!")
             index = 0
             ProgressHUD.showSuccess("Correct!")
             score += 1
         }
         else {
-            print("Wrong!")
             index = 1
             ProgressHUD.showError("Wrong!")
         }
