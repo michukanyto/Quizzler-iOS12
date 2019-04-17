@@ -34,32 +34,25 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         playSound(soundName: soundName[index])
-        
-        //////////////////////////////////////
-        
+
 //                SET FIREBASE REFERENCE
         ref = Database.database().reference()//2 to read
         dataBaseHandle = ref?.child("QuestionBank").observe(.value, with: { (snapshot) in
             guard let data = snapshot.value as? [String:[String:Any]]  else{
                 return
             }
-            
-
+            var l = 0
             for(_,val) in data{
-                
                  let newObj = Question(questionText:val["Question"] as! String, correctAnswer:val["correctAnswer"] as! Bool)
+                print("Question : ",l,"\n##################\n")
                  self.posData.append(newObj)
                 print(val["Question"] as! String,"\n")
                 print(val["correctAnswer"] as! Bool,"\n")
+                l += 1
             }
-
-
+          self.nextQuestion()
         })
-     
-      
-      ////////////////////////////////////
-        nextQuestion()
-        
+
     }
 
 
@@ -70,7 +63,7 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
         else{
             pickedAnswer = false
         }
-        counter += 1
+//        counter += 1
         checkAnswer()
   
     }
@@ -85,9 +78,10 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
 
 
     func nextQuestion() {
+        print("Question : ",counter)
+        print(posData[counter].questionText)
+        print(posData[counter].correctAnswer)
         if counter < posData.count - 1{
-            
-            //////////////////////////////////////////////////////////
             let question = posData[counter].questionText
             questionLabel.text = question
             updateUI()
@@ -103,15 +97,16 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
 
             //PRESENT ALERT TO THE VIEWER
             present(alert, animated: true,completion: nil)
-
         }
-
+        
     }
 
     
     
     func checkAnswer() {
+        print("Counter from check answer", counter)
         let answer = posData[counter]
+        print("My answer : ",answer.correctAnswer,"  machine answer : ", pickedAnswer)
         if answer.correctAnswer == pickedAnswer{
             index = 0
             ProgressHUD.showSuccess("Correct!")
@@ -122,6 +117,7 @@ class ViewController: UIViewController,AVAudioPlayerDelegate {
             ProgressHUD.showError("Wrong!")
         }
         playSound(soundName: soundName[index])
+        counter += 1
         nextQuestion()
     }
     
